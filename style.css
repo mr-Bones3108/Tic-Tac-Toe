@@ -7,4 +7,31 @@
 
 body{
     font-family: 'Roboto', sans-serif;
+    background-color: #F6D74F;
 }
+
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.square{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: yellow;
+    color: red;
+    border: 1px solid black;
+    font-size: 2rem;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(3,100px);
+}
+
