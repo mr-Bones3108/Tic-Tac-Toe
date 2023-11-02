@@ -21,7 +21,7 @@ const createGameBoard = (() => {
   };
 })();
 
-createGameBoard.createBoard()
+
 
 //factory function
 const createPlayer = (name,mark)=>{
@@ -31,6 +31,32 @@ const createPlayer = (name,mark)=>{
     }
 };
 
+
+//gameModule
+const game = (()=>{
+  let players=[]
+  let currPlayer;
+  let gameOver;
+
+  const start = ()=>{
+    players = [
+      createPlayer(document.querySelector("#player1").value, "X"),
+      createPlayer(document.querySelector("#player2").value, "O")
+    ]
+    createGameBoard.createBoard()
+    players.forEach(element =>{
+      console.log(element)
+    })
+  };
+
+  return{
+    start
+  }
+})();
+
+function playGame(){
+  game.start()
+}
 
 
 
