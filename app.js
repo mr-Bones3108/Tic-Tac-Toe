@@ -1,4 +1,16 @@
 
+const displayController = (()=>{
+  const renderMessage = ((message)=>{
+    document.querySelector("#message").innerHTML = message;
+  })
+
+  return{
+    renderMessage,
+  }
+})();
+
+
+
 //BoardModule
 const createGameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
@@ -24,18 +36,10 @@ const createGameBoard = (() => {
       return board
     }
 
-    const reset =()=>{
-      for(let i=0; i<board.length;i++){
-        board[i]=""
-      }
-      createBoard()
-    }
-  
   return {
     createBoard,
     update,
-    getGameBoard,
-    reset
+    getGameBoard
   };
 })();
 
@@ -83,19 +87,26 @@ const game = (()=>{
 
     if(checkForWin(createGameBoard.getGameBoard(), players[currPlayer].mark)){
       gameOver=true;
-      alert(`${players[currPlayer].name} won!`)
+      // alert(`${players[currPlayer].name} won!`)
+      displayController.renderMessage(`${players[currPlayer].name} won!`)
     }
     else if(checkForTie(createGameBoard.getGameBoard())){
       gameOver=true;
-      alert(`Its a tie`) 
+      // alert(`Its a tie`) 
+      displayController.renderMessage(`Its a tie`);
     }
     // console.log(createGameBoard.getGameBoard())
     currPlayer = currPlayer === 0 ? 1 : 0;
   }
 
   const restart = ()=>{
-    createGameBoard.reset()
-    // console.log(createGameBoard.getGameBoard())
+    for(let i=0; i<9;i++){
+      createGameBoard.update(i,"");
+    }
+
+    createGameBoard.createBoard()
+    gameOver=false;
+    document.querySelector("#message").innerHTML="";
   }
 
   return{
