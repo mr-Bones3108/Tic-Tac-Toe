@@ -2,35 +2,32 @@
 //BoardModule
 const createGameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
-  const container = document.getElementById("container");
-
   const createBoard = () => {
-    // board.forEach((row,rowIndex) => {
-    //     const boxDiv = document.createElement('div');
-    //     boxDiv.classList = 'square';
-    //     container.appendChild(boxDiv);
-    //   });
-    
     let boardHtml = "";
     board.forEach((square, index) => {
       boardHtml += `<div class="square" id="square-${index}">${square}</div>`;
     });
-
-    const boardContainer = document.createElement("div");
-    boardContainer.classList='grid-container'
-    boardContainer.innerHTML = boardHtml
-    container.appendChild(boardContainer);
+    document.querySelector("#container").innerHTML = boardHtml
 
     const squares = document.querySelectorAll(".square");
     squares.forEach((square) => {
       square.addEventListener("click", game.handleClick);
     });
-
-
     };
+
+    const update = (index,mark)=>{
+      board[index]=mark
+      createBoard()
+    }
+
+    const getGameBoard =()=>{
+      return board
+    }
   
   return {
     createBoard,
+    update,
+    getGameBoard
   };
 })();
 
@@ -56,15 +53,19 @@ const game = (()=>{
       createPlayer(document.querySelector("#player1").value, "X"),
       createPlayer(document.querySelector("#player2").value, "O")
     ]
+    currPlayer=0;
     createGameBoard.createBoard()
-    players.forEach(element =>{
-      console.log(element)
-    })
   };
 
   const handleClick = (event)=>{
     const index = parseInt(event.target.id.split("-")[1])
-    alert(index)
+    const valuePresent = createGameBoard.getGameBoard()[index];
+    if (valuePresent !== ""){
+      return;
+    }
+    createGameBoard.update(index,players[currPlayer].mark)
+    currPlayer = currPlayer === 0 ? 1 : 0;
+
   }
 
   return{
