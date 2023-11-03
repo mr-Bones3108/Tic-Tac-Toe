@@ -1,4 +1,3 @@
-const container = document.getElementById('container')
 
 //BoardModule
 const createGameBoard = (() => {
@@ -6,18 +5,30 @@ const createGameBoard = (() => {
   const container = document.getElementById("container");
 
   const createBoard = () => {
-    board.forEach((row,rowIndex) => {
-        const boxDiv = document.createElement('div');
-        boxDiv.classList = 'square';
-        container.appendChild(boxDiv);
-      });
+    // board.forEach((row,rowIndex) => {
+    //     const boxDiv = document.createElement('div');
+    //     boxDiv.classList = 'square';
+    //     container.appendChild(boxDiv);
+    //   });
+    
+    let boardHtml = "";
+    board.forEach((square, index) => {
+      boardHtml += `<div class="square" id="square-${index}">${square}</div>`;
+    });
 
-      const square = document.querySelectorAll(".square");
-      square.forEach((square)=>{
-        square.addEventListener('click', console.log(square));
-      })
+    const boardContainer = document.createElement("div");
+    boardContainer.classList='grid-container'
+    boardContainer.innerHTML = boardHtml
+    container.appendChild(boardContainer);
+
+    const squares = document.querySelectorAll(".square");
+    squares.forEach((square) => {
+      square.addEventListener("click", game.handleClick);
+    });
+
+
     };
-
+  
   return {
     createBoard,
   };
@@ -51,8 +62,14 @@ const game = (()=>{
     })
   };
 
+  const handleClick = (event)=>{
+    const index = parseInt(event.target.id.split("-")[1])
+    alert(index)
+  }
+
   return{
-    start
+    start,
+    handleClick
   }
 })();
 
