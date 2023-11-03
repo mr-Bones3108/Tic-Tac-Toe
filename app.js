@@ -1,4 +1,4 @@
-
+// Display Controller Module
 const displayController = (()=>{
   const renderMessage = ((message)=>{
     document.querySelector("#message").innerHTML = message;
